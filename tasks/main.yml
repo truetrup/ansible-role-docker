@@ -1,0 +1,14 @@
+---
+- name: include Debian tasks
+  include: Debian.yml
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
+
+- name: include CentOS tasks
+  include: CentOS.yml
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+
+- name: start and enable docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes

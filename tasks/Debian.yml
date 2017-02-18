@@ -1,0 +1,26 @@
+---
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
+- name: add docker key
+  apt_key:
+    url: "https://apt.dockerproject.org/gpg"
+    state: present
+
+- name: add docker repo
+  apt_repository:
+    repo: deb https://apt.dockerproject.org/repo debian-{{ ansible_distribution_release }} main
+    state: present
+
+- name: install docker packages
+  apt:
+    name: docker-engine
+    update_cache: yes
+    state: latest
