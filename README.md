@@ -9,7 +9,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: vpolischuk.docker }
+         - { role: truetrup.docker }
 
 License
 -------
