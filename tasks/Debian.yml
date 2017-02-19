@@ -6,8 +6,8 @@
   with_items:
     - apt-transport-https
     - ca-certificates
-    - curl
-    - software-properties-common
+    - python-pip
+    - python-dev
 
 - name: add docker key
   apt_key:
@@ -24,3 +24,14 @@
     name: docker-engine
     update_cache: yes
     state: latest
+
+- name: update pip
+  pip:
+    name: pip
+    state: latest
+  
+- name: install docker-py
+  pip:
+    name: docker-py
+    state: latest
+
