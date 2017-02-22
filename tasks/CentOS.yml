@@ -1,3 +1,8 @@
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: latest
+
 - name: add docker repo
   yum_repository:
     name: Docker Repository
@@ -5,7 +10,12 @@
     baseurl: https://yum.dockerproject.org/repo/main/centos/7/
     gpgcheck: yes
 
-- name: install docker
+- name: install packages
   yum:
-    name: docker
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - docker
+    - python2-pip
+    - python2-devel
+    - gcc
