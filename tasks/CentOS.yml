@@ -5,17 +5,22 @@
 
 - name: add docker repo
   yum_repository:
-    name: Docker Repository
+    name: docker
     description: Docker Repository
     baseurl: https://yum.dockerproject.org/repo/main/centos/7/
     gpgcheck: yes
+
+- name: add docker key
+  rpm_key:
+    key: https://yum.dockerproject.org/gpg
+    state: present
 
 - name: install packages
   yum:
     name: "{{ item }}"
     state: latest
   with_items:
-    - docker
+    - docker-engine
     - python2-pip
     - python2-devel
     - gcc
