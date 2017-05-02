@@ -18,4 +18,4 @@ vagrant:
       ansible_groups:
         - group1
 verifier:
-  name: goss
+  name: testinfra
