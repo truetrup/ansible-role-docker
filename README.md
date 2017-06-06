@@ -11,6 +11,14 @@ Example Playbook
       roles:
          - { role: ansible-role-docker }
 
+Variables and defaults
+----------------
+
+docker_tls: False - support for tls on 2376 port
+docker_version: 17.05.0 - version of docker package to install
+docker_pip_version: 9.0.1 - version of pip to install
+dockerpy_version: 1.7.0 - version of docker-py python module
+
 Attention
 ----------------
 
