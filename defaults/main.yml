@@ -3,4 +3,4 @@
 docker_tls: False
 docker_version: 17.05.0
 docker_pip_version: 9.0.1
-dockerpy_version: 1.7.0
+dockerpy_version: 1.9.0
