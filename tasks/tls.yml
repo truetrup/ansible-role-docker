@@ -18,10 +18,10 @@
     creates: /etc/docker/EasyRSA-3.0.1/pki/ca.crt
 
 - name: generate server cert and key
-  command: "./easyrsa build-server-full {{ ansible_nodename }} nopass"
+  command: "./easyrsa build-server-full {{ inventory_hostname }} nopass"
   args:
     chdir: /etc/docker/EasyRSA-3.0.1
-    creates: "/etc/docker/EasyRSA-3.0.1/pki/issued/{{ ansible_nodename }}.crt"
+    creates: "/etc/docker/EasyRSA-3.0.1/pki/issued/{{ inventory_hostname }}.crt"
 
 - name: generate client cert and key
   command: "/etc/docker/EasyRSA-3.0.1/easyrsa build-client-full client nopass"

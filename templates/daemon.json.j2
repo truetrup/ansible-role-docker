@@ -1,8 +1,9 @@
 {
 {% if docker_tls %}
-  "tls": true,
-  "tlscert": "/etc/docker/EasyRSA-3.0.1/pki/issued/{{ ansible_nodename }}.crt",
-  "tlskey": "/etc/docker/EasyRSA-3.0.1/pki/private/{{ ansible_nodename }}.key",
+  "tlsverify": true,
+  "tlscacert": "/etc/docker/EasyRSA-3.0.1/pki/ca.crt",
+  "tlscert": "/etc/docker/EasyRSA-3.0.1/pki/issued/{{ inventory_hostname }}.crt",
+  "tlskey": "/etc/docker/EasyRSA-3.0.1/pki/private/{{ inventory_hostname }}.key",
   "hosts": ["fd://", "tcp://0.0.0.0:2376"]
 {% endif %}
 }
