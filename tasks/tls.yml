@@ -1,0 +1,45 @@
+---
+- name: get EasyRSA
+  unarchive:
+    src: "https://github.com/OpenVPN/easy-rsa/releases/download/3.0.1/EasyRSA-3.0.1.tgz"
+    dest: /etc/docker
+    remote_src: yes
+
+- name: init pki
+  command: ./easyrsa init-pki
+  args:
+    chdir: /etc/docker/EasyRSA-3.0.1
+    creates: /etc/docker/EasyRSA-3.0.1/pki
+
+- name: build CA
+  command: ./easyrsa --batch build-ca nopass
+  args:
+    chdir: /etc/docker/EasyRSA-3.0.1
+    creates: /etc/docker/EasyRSA-3.0.1/pki/ca.crt
+
+- name: generate server cert and key
+  command: "./easyrsa build-server-full {{ ansible_nodename }} nopass"
+  args:
+    chdir: /etc/docker/EasyRSA-3.0.1
+    creates: "/etc/docker/EasyRSA-3.0.1/pki/issued/{{ ansible_nodename }}.crt"
+
+- name: generate client cert and key
+  command: "/etc/docker/EasyRSA-3.0.1/easyrsa build-client-full client nopass"
+  args:
+    chdir: /etc/docker/EasyRSA-3.0.1
+    creates: "/etc/docker/EasyRSA-3.0.1/pki/issued/client.crt"
+
+- name: copy systemd service-file
+  copy:
+    src: /lib/systemd/system/docker.service
+    dest: /etc/systemd/system/docker.service
+    remote_src: yes
+    force: no
+
+- name: edit systemd service-file
+  lineinfile:
+    path: /etc/systemd/system/docker.service
+    regexp: "^ExecStart=/usr/bin/dockerd -H fd://"
+    line: "ExecStart=/usr/bin/dockerd"
+  notify:
+    - reload systemctl services

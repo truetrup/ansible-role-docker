@@ -7,18 +7,30 @@
   include: CentOS.yml
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
 
-- name: start and enable docker service
+- name: include tls support
+  include: tls.yml
+  when: docker_tls
+
+- name: template docker config
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify:
+    - restart docker
+
+- name: enable docker service
   service:
     name: docker
-    state: started
     enabled: yes
 
 - name: update pip
   pip:
     name: pip
-    state: latest
+    state: present
+    version: "{{ docker_pip_version }}"
 
 - name: install docker-py
   pip:
     name: docker-py
-    state: latest
+    state: present
+    version: "{{ dockerpy_version }}"

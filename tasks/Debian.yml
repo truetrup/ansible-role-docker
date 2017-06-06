@@ -21,6 +21,6 @@
 
 - name: install docker packages
   apt:
-    name: docker-engine
+    name: "docker-engine={{ docker_version }}~ce-0~debian-jessie"
     update_cache: yes
-    state: latest
+    state: present
