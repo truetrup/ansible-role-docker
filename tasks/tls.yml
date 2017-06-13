@@ -39,7 +39,8 @@
 - name: edit systemd service-file
   lineinfile:
     path: /etc/systemd/system/docker.service
-    regexp: "^ExecStart=/usr/bin/dockerd -H fd://"
+    regexp: "^ExecStart="
     line: "ExecStart=/usr/bin/dockerd"
   notify:
     - reload systemctl services
+    - restart docker
