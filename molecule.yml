@@ -5,8 +5,6 @@ vagrant:
   platforms:
     - name: jessie64
       box: debian/jessie64
-    - name: centos7
-      box: centos/7
   providers:
     - name: virtualbox
       type: virtualbox
